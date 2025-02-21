@@ -18,6 +18,11 @@ First, let's set up our environment and install dependencies:
 python -m venv env
 source env/bin/activate  # On Windows: env\Scripts\activate
 
+When we install a virtual environment, the activation script sometimes fails to work, and we encounter an error.
+We can activate it either through the Command Prompt (CMD) or by setting the command in the terminal of Visual Studio. Visual Studio has its own terminal where this can be done
+
+' Set-ExecutionPolicy RemoteSigned -Scope Process '
+
 # Install required packages
 pip install django djangorestframework Pillow torch torchvision diffusers transformers accelerate
 ```
@@ -28,4 +33,27 @@ Create a new Django project:
 django-admin startproject image_generator_project
 cd image_generator_project
 python manage.py startapp ai_image_generator
+```
+
+## Note This
+
+## Configuration
+
+Update `image_generator_project/settings.py`:
+
+```python
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'rest_framework',
+    'ai_image_generator',
+]
+
+# Add media settings
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 ```
